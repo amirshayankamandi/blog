@@ -1,0 +1,13 @@
+
+*{
+    background-color: red;
+    color:yellow;
+}
+article{
+    max-width: 600px;
+    margin: auto;
+    color: red;
+}
+p{
+    color: red;
+}
