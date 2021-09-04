@@ -13,9 +13,19 @@
                     <img src="./images/logo.svg" alt="Laracasts Logo" width="165" height="16">
                 </a>
             </div>
+            <div class="mt-8 md:mt-0 flex items-center">
+                @auth
 
-            <div class="mt-8 md:mt-0">
-                <a href="/" class="text-xs font-bold uppercase">Home Page</a>
+                    <form action="/logout" method="post" class="text-xs font-semibold text-blue-500">
+                        @csrf
+                        <button type="logout">Log out</button>
+                    </form>
+                @else
+                    <a href="/register" class="text-xs font-bold uppercase">Register</a>
+                    <a href="/login" class="ml-6 text-xs font-bold uppercase">Login</a>
+                @endauth
+
+
 
                 <a href="#" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
                     Subscribe for Updates
