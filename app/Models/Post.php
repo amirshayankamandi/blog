@@ -48,7 +48,7 @@ class Post extends Model
     }
 
 
-    public function comment()
+    public function comments()
     {
         return $this->HasMany(Comment::class);
     }
