@@ -17,12 +17,7 @@ class Post extends Model
         'category',
         'author'
     ];
-
-    protected $fillable = [
-        'title',
-        'excerpt',
-        'body',
-    ];
+    
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? false, fn ($query, $search) => 

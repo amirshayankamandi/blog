@@ -11,12 +11,14 @@ class Comment extends Model
 {
     use HasFactory;
 
-    public function post(){
-        return $this->blongsTo(Post::class);
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
     }
 
     public function author()
     {
-        return $this->blongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
+    
 }
