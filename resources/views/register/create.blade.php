@@ -1,82 +1,30 @@
 <x-layout>
     <section class="px-6 py-8">
         <main class="max-w-lg mx-auto mt-10">
-            <h1 class="text-center font-bold text-xl">Register</h1>
+            <x-panel>
+                <h1 class="text-center font-bold text-xl">Register</h1>
 
-            <form action="/register" method="post" class="mt-10 bg-blue-200 border border-gray-200 p-6 rounded-xl">
-                @csrf
-                <div class="mb-6">
-                    <label for="block mb-2 upperace font-bold text-xs text-gray-700 " for="name">
-                        Name
-                    </label>
+                <form action="/register" method="post" class="mt-10 ">
+                    @csrf
 
-                    <input class=" border border-gray-400 p-2  w-full" type="text" name="name" id="name"
-                        value="{{ old('name') }}" required>
-                    @error('name')
-                        <div class="text-red-500 text-xs mt-1">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
+                    <x-form.input name="name" type="text" required />
+                    <x-form.input name="username" type="text" required />
+                    <x-form.input name="email" type="email" autocomplete="username" required />
+                    <x-form.input name="password" type="password" autocomplete="current-password" required />
+                    <x-form.button>Register</x-form.button>
 
-                <div class="mb-6">
-                    <label for="block mb-2 upperace font-bold text-xs text-gray-700 " for="username">
-                        Username
-                    </label>
+                    <div class="flex mt-6">
+                        @if ($errors->any())
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li class="text-red-500 text-xs"> {{ $error }}</li>
+                                @endforeach
+                            </ul>
 
-                    <input class=" border border-gray-400 p-2  w-full" type="text" name="username" id="username"
-                        value="{{ old('username') }}" required>
-                    @error('username')
-                        <div class=" text-red-500 text-xs mt-1">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-                <div class="mb-6">
-                    <label for="block mb-2 upperace font-bold text-xs text-gray-700 " for="email">
-                        Email
-                    </label>
-
-                    <input class=" border border-gray-400 p-2  w-full" type="email" name="email" id="email"
-                        value="{{ old('name') }}" required>
-                    @error('email')
-                        <div class="text-red-500 text-xs mt-1">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-                <div class="mb-6">
-                    <label for="block mb-2 upperace font-bold text-xs text-gray-700 " for="password">
-                        Password
-                    </label>
-
-                    <input class=" border border-gray-400 p-2  w-full" type="password" name="password" id="password"
-                        required>
-                    @error('password')
-                        <div class="text-red-500 text-xs mt-1">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-                <div class="mb-6">
-                    <label for="block mb-2 upperace font-bold text-xs text-gray-700 " for="submit">
-
-                    </label>
-
-                    <button class="border border-gray-400 p-2 w-full" type="submit">Submit</button>
-                </div>
-
-                @if ($errors->any())
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li class="text-red-500 text-xs"> {{ $error }}</li>
-                        @endforeach
-                    </ul>
-                    
-                @endif
-            </form>
+                        @endif
+                    </div>
+                </form>
+            </x-panel>
         </main>
     </section>
 </x-layout>

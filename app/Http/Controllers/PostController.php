@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -21,10 +22,5 @@ class PostController extends Controller
         return view('posts.show', [
             'post' => $post,
         ]);
-    }
-
-    public function create()
-    {
-        return view('posts.create');
     }
 }

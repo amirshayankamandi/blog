@@ -3,40 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
+
 class SessionsController extends Controller
 {
-
     public function create()
     {
-            return view('login.create'); 
+        return view('login.create');
     }
 
-    public function store(){
-        
-        //valid the request
-        $attributes =request()->validate([
+    public function store()
+    {
+        $attributes = request()->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ]);
-
-        //attempt to authenticate and log the user
-        if (! auth()->attempt($attributes)){
-
+    // auth()
+        if (! Auth::attempt($attributes)) {
             throw ValidationException::withMessages([
-                'email' => 'Your Provided credentials could not be verifed.'
-                ]);
-            }    
-            
-            session()->regenerate();
-            return redirect('/')->with('success','Welcome Back');
-      
-    }
+                'email' => 'Your provided credentials could not be verified.'
+            ]);
+        }
 
+        session()->regenerate();
+
+        return redirect('/')->with('success', 'Welcome Back!');
+    }
 
     public function destroy()
     {
-        auth()->logout();
+        Auth::logout();
 
-        return redirect('/')->with('success', 'Good Bye');
+        return redirect('/')->with('success', 'Goodbye!');
     }
 }

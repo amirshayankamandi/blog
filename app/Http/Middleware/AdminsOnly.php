@@ -23,6 +23,5 @@ class AdminsOnly
         }
 
         return $next($request);
-
     }
 }
