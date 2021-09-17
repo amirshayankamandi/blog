@@ -13,7 +13,7 @@
 
         {{ $attributes(['value' => old($name)]) }}
         
-        required>
+        >
 
     <x-form.error name="{{ $name }}" />
 </x-form.field>

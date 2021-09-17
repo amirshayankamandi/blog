@@ -9,10 +9,7 @@
         <div class="flex-1 flex flex-col justify-between">
             <header class="mt-8 lg:mt-0">
                 <div class="space-x-2">
-                    <a href="/categories/{{ $post->category->slug }}"
-                        class="px-3 py-1 border border-blue-300 rounded-full text-blue-300 text-xs uppercase font-semibold"
-                        style="font-size: 10px">{{ $post->category->name }}</a>
-
+                    <x-category-link :category="$post->category" />
                 </div>
 
                 <div class="mt-4">
@@ -39,7 +36,7 @@
                     <img src="./images/lary-avatar.svg" alt="Lary avatar">
                     <div class="ml-3">
                         <h5 class="font-bold">
-                            <a href="/?author={{ $post->author->username}}">
+                            <a href="/?author={{ $post->author->username }}">
 
                                 {{ $post->author->username }}
                         </h5>

@@ -22,25 +22,58 @@ class AdminPostController extends Controller
 
     public function store()
     {
-        $attributes =  request()->validate([
-            'title' => 'required',
-            'thumbnail' => 'required|image',
-            'slug' => ['required', Rule::unique('posts', 'slug')],
-            'excerpt' => 'required',
-            'body' => 'required',
-            'category_id' => ['required', Rule::unique('categories', 'id')],
-        ]);
 
-        $attributes['user-id'] = auth()->id();
-        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
+        $attributes = array_merge($this->validatePost(), [
+            'user_id' => request()->user()->id,
+            'thumbnail' => request()->file('thumbnail')->store('thumbnails')
+        ]);
 
         Post::create($attributes);
 
         return redirect('/');
     }
 
+
     public function edit(Post $post)
     {
         return view('admin.posts.edit', ['post' => $post]);
+    }
+
+
+
+    public function update(Post $post)
+    {
+        $attributes = $this->validatePost(new Post());
+
+        if (($attributes['thumbnail']) ?? false) {
+
+            $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
+        }
+
+        $post->update($attributes);
+
+        return back()->with('success', 'Post Updated!');
+    }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+
+        return back()->with('success', 'Post Deleted!');
+    }
+
+    protected function validatePost(?Post $post = null): array
+    {
+        $post ??= new Post();
+
+        return request()->validate([
+            'title' => 'required',
+            'thumbnail' => $post->exists ? ['image'] : ['required', 'image'],
+            'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post)],
+            'excerpt' => 'required',
+            'body' => 'required',
+            'category_id' => ['required', Rule::exists('category', 'id')],
+            'published_at' => 'required'
+        ]);
     }
 }

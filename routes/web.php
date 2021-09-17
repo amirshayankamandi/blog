@@ -35,7 +35,6 @@ Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
 Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
 // Admin
-Route::get('admin/posts', [AdminPostController::class, 'index'])->middleware('admin');
-Route::get('admin/posts/create', [AdminPostController::class, 'create'])->middleware('admin');
-Route::get('admin/posts.store', [AdminPostController::class, 'store'])->middleware('admin');
-Route::get('admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->middleware('admin');
+Route::middleware('can:admin')->group(function () {
+Route::resource('admin/posts', AdminPostController::class)->except('show');
+});

@@ -7,7 +7,10 @@ use App\Services\Newslatter;
 use Facade\FlareClient\Api;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 use MailchimpMarketing\ApiClient;
+use App\Models\User;
+use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -39,5 +42,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Model::unguard();
+
+        Gate::define('admin', function (User $user) {
+            return $user->username == 'shayandev';
+        });
+
+        Blade::if('admin', function () {
+            return request()->user()?->can('admin');
+        });
     }
 }
